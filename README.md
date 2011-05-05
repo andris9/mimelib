@@ -4,7 +4,7 @@
 
 ## Reference
 
-See [docs.md](/andris9/mimelib/blob/master/docs.md) for a complete function reference
+See [API reference](/andris9/mimelib/blob/master/doc.md) for documentation
 
 ## Installation
 
