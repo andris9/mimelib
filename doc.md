@@ -59,11 +59,17 @@ Becomes with UTF-8 and Quoted-printable encoding
 
 Decodes a string from mime encoded word format (see also `encodeMimeWord`)
 
-    mimelib.decodeMimeWord(str [, encoding][, charset]) -> String
+    mimelib.decodeMimeWord(str) -> String
     
-  - `str` (String): String to be encoded
-  - `encoding` (String): Encoding Q for quoted printable or B (def.) for base64
-  - `charset` (String): Charset to be used, defaults to UTF-8
+  - `str` (String): String to be decoded
+
+For example
+
+    mimelib.decodeMimeWord("=?UTF-8?q?See_on_=C3=B5hin_test?=");
+
+will become
+
+    See on õhin test
 
 ## encodeQuotedPrintable
 
