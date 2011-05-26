@@ -1,6 +1,12 @@
 
-// see http://github.com/bnoordhuis/node-iconv for more info
-var Iconv = require("iconv").Iconv;
+try{
+    // see http://github.com/bnoordhuis/node-iconv for more info
+    var Iconv = require("iconv").Iconv;
+}catch(E){
+    // convert nothing
+    Iconv = function(){}
+    Iconv.prototype.convert = function(buf){return buf;};
+}
 
 /* mime related functions - encoding/decoding etc*/
 /* TODO: Only UTF-8 and Latin1 are allowed with encodeQuotedPrintable */
