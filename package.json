@@ -1,5 +1,5 @@
 {
-    "name": "mimelib",
+    "name": "mimelib-noiconv",
     "description": "MIME functions to encode/decode e-mails etc.",
     "version": "0.1.2",
     "author" : "Andris Reinman",
@@ -22,7 +22,6 @@
         }
     ],
     "dependencies": {
-        "iconv":"*"
     },
     "keywords": ["e-mail", "mime", "email"],
     "man": "./man/doc.1"
