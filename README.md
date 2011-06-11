@@ -10,8 +10,8 @@ See [API reference](/andris9/mimelib/blob/master/doc.md) for documentation
 
 Install with *npm*
 
-    npm install mimelib
+    npm install mimelib-noiconv
     
 ## Usage
 
-    var mimelib = require("mimelib");
+    var mimelib = require("mimelib-noiconv");
