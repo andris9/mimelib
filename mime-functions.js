@@ -289,34 +289,78 @@ this.parseAddresses = function(addresses){
     addresses = addresses.replace(/\\\\/g,function(a){return escape(a.charAt(1))});
     addresses = addresses.replace(/\\["']/g,function(a){return escape(a.charAt(1))});
     
-    var list = addresses.split(","), address, addressArr = [], name, email;
-    for(var i=0, len=list.length; i<len; i++){
-        address = list[i].trim();
-        if(address.match(/[\s"'<>()]/)){ // address with comments (name)
-            email = false;
-            address = address.replace(/<([^>]+)>/,function(a,b){
-                email = b.indexOf("@")>=0 && b;
-                return email?"":a;
+    // find qutoed strings
+    
+    var parts = addresses.split(','), curStr, 
+        curQuote, lastPos, remainder="", str, list = [],
+        curAddress, address, addressArr = [], name, email, i, len;
+
+    // separate quoted text from text parts
+    for(i=0, len=parts.length; i<len; i++){
+        str = "";
+    
+        curStr = (remainder+parts[i]).trim();
+        
+        curQuote = curStr.charAt(0);
+        if(curQuote == "'" || curQuote == '"'){
+            lastPos = curStr.lastIndexOf(curQuote);
+            
+            if(!lastPos){
+                remainder = remainder+parts[i]+",";
+                continue;
+            }else{
+                remainder = "";
+                str = curStr.substring(1, lastPos).trim();
+                address = curStr.substr(lastPos+1).trim();
+            }
+            
+        }else{
+            address = curStr;
+        }
+        
+        list.push({name: str, address: address, original: curStr});
+    }
+  
+    // find e-mail addresses and user names
+    for(i=0, len=list.length; i<len; i++){
+        curAddress = list[i];
+        
+        email = false;
+        name = false;
+        
+        name = curAddress.name;
+        
+        address = curAddress.address.replace(/<([^>]+)>/, function(original, addr){
+            email = addr.indexOf("@")>=0 && addr;
+            return email ? "" : original;
+        }).trim();
+        
+        if(!email){
+            address = address.replace(/(\S+@\S+)/, function(original, m){
+                email = m;
+                return email ? "" : original;
             });
-            address = address.trim();
+        }
+        
+        if(!name){
             if(email){
-                name = address.replace(/"/g,"").trim();
-            }else{ // try brackets
-                address = address.replace(/\(([^)]+)\)/,function(a,b){
-                    name = b;
+                email = email.replace(/\(([^)]+)\)/,function(original, n){
+                    name = n;
                     return "";
                 });
-                email = address.indexOf("@")>=0 && address.trim();
             }
-            // just in case something got mixed up
-            if(!email && name.indexOf("@")>=0){
-                email = name;
-                name = false;
+            if(!name){
+                name = address.replace(/"/g,"").trim();
             }
-            if(email)
-                addressArr.push({address:decodeURIComponent(email), name: decodeURIComponent(name)});
-        }else if(address.indexOf("@")>=0)
-            addressArr.push({address:address, name:false});
+        }
+        
+        // just in case something got mixed up
+        if(!email && name.indexOf("@")>=0){
+            email = name;
+            name = false;
+        }
+        if(email)
+            addressArr.push({address:decodeURIComponent(email), name: decodeURIComponent(name || "")});
     }
     return addressArr;
 }
