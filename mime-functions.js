@@ -294,6 +294,7 @@ this.parseAddresses = function(addresses){
     var parts = addresses.split(','), curStr, 
         curQuote, lastPos, remainder="", str, list = [],
         curAddress, address, addressArr = [], name, email, i, len;
+    var rightEnd;
 
     // separate quoted text from text parts
     for(i=0, len=parts.length; i<len; i++){
@@ -303,7 +304,9 @@ this.parseAddresses = function(addresses){
         
         curQuote = curStr.charAt(0);
         if(curQuote == "'" || curQuote == '"'){
-            lastPos = curStr.lastIndexOf(curQuote);
+            rightEnd= curStr.indexOf("<");
+            if(rightEnd == -1)rightEnd= curStr.length-1;
+            lastPos = curStr.lastIndexOf(curQuote,rightEnd);
             
             if(!lastPos){
                 remainder = remainder+parts[i]+",";
