@@ -57,7 +57,7 @@ this.foldLine = function(str, maxLength, foldAnywhere, afterSpace){
                 response += line.substr(0,lf)+"\r\n"+(!foldAnywhere && !afterSpace && "       " || "");
                 curpos -= line.substr(lf).length;
             }else{
-                line = line.replace(/=+$/, "");
+                line = line.replace(/=[a-f0-9]?$/i, "");
                 response+=line + "\r\n";
             }
         }
