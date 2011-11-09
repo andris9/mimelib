@@ -1,4 +1,3 @@
-
 try{
     // see http://github.com/bnoordhuis/node-iconv for more info
     var Iconv = require("iconv").Iconv;
@@ -57,8 +56,10 @@ this.foldLine = function(str, maxLength, foldAnywhere, afterSpace){
                 }
                 response += line.substr(0,lf)+"\r\n"+(!foldAnywhere && !afterSpace && "       " || "");
                 curpos -= line.substr(lf).length;
-            }else
-                response+=line;
+            }else{
+                line = line.replace(/=+$/, "");
+                response+=line + "\r\n";
+            }
         }
         curpos += line.length;
     }
