@@ -161,11 +161,11 @@ this.encodeQuotedPrintable = function(str, mimeWord, charset){
 
     if(!mimeWord){
         // lines might not be longer than 76 bytes, soft break: "=\r\n"
-        var lines = str.split(/\r?\n/);
-        str.replace(/(.{73}(?!\r?\n))/,"$&=\r\n")
+        var lines = str.split(/\r?\n|\r/);
+        str.replace(/(.{73}(?!\r?\n|\r))/,"$&=\r\n")
         for(var i=0, len = lines.length; i<len; i++){
             if(lines[i].length>76){
-                lines[i] = this.foldLine(lines[i],76, false, true).replace(/\r\n/g,"=\r\n");
+                lines[i] = this.foldLine(lines[i],76, false, true).replace(/(\r?\n|\r)/g,"=\r\n");
             }
         }
         str = lines.join("\r\n");
@@ -194,7 +194,7 @@ this.decodeQuotedPrintable = function(str, mimeWord, charset){
     if(mimeWord){
         str = str.replace(/_/g," ");
     }else{
-        str = str.replace(/=\r\n/gm,'');
+        str = str.replace(/=(\r?\n|\r)/gm,'');
         str = str.replace(/=$/,"");
     }
     if(charset == "UTF-8")
@@ -256,10 +256,10 @@ this.decodeBase64 = function(str, charset){
 this.parseHeaders = function(headers){
     var text, lines, line, i, name, value, cmd, header_lines = {};
     // unfold
-    headers = headers.replace(/\r?\n([ \t])/gm," ");
+    headers = headers.replace(/(\r?\n|\r)([ \t])/gm," ");
 
     // split lines
-    lines = headers.split(/\r?\n/);
+    lines = headers.split(/(\r?\n|\r)/);
     for(i=0; i<lines.length;i++){
         if(!lines[i]) // no more header lines
             break;
