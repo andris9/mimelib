@@ -436,8 +436,9 @@ function lineEdges(str){
  * Converts a buffer in <charset> codepage into UTF-8 string
  **/
 function fromCharset(charset, buffer, keep_buffer){
-    var iconv = new Iconv(charset,'UTF-8'),
-        buffer = iconv.convert(buffer);
+    var iconv = new Iconv(charset, 'UTF-8//TRANSLIT//IGNORE'),
+        buffer;
+    buffer = iconv.convert(buffer);
     return keep_buffer?buffer:buffer.toString("utf-8");
 }
 
@@ -449,7 +450,7 @@ function fromCharset(charset, buffer, keep_buffer){
  * Converts a string or buffer to <charset> codepage
  **/
 function toCharset(charset, buffer){
-    var iconv = new Iconv('UTF-8',charset);
+    var iconv = new Iconv('UTF-8', charset+"//TRANSLIT//IGNORE");
     return iconv.convert(buffer);
 }
 
