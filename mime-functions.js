@@ -198,7 +198,9 @@ this.decodeQuotedPrintable = function(str, mimeWord, charset){
             str = unescape(str);
         else{
             str = decodeBytestreamUrlencoding(str);
-            str = fromCharset(charset, str);
+            if(charset!="BINARY"){
+                str = fromCharset(charset, str);
+            }
         }
     }
     return str;
