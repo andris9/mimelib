@@ -57,4 +57,4 @@ module.exports = {
     "avi": "video/x-msvideo",
     "zip": "application/zip",
     "rar": "application/x-rar-compressed"
-}
+};

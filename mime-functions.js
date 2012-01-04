@@ -1,11 +1,4 @@
-try{
-    // see http://github.com/bnoordhuis/node-iconv for more info
-    var Iconv = require("iconv").Iconv;
-}catch(E){
-    // convert nothing
-    Iconv = function(){}
-    Iconv.prototype.convert = function(buf){return buf;};
-}
+var Iconv = require("iconv").Iconv;
 
 /* mime related functions - encoding/decoding etc*/
 /* TODO: Only UTF-8 and Latin1 are allowed with encodeQuotedPrintable */
@@ -37,7 +30,7 @@ this.foldLine = function(str, maxLength, foldAnywhere, afterSpace){
         return str;
     
     // read in <maxLength> bytes and try to fold it
-    while(line = str.substr(curpos, maxLength)){
+    while((line = str.substr(curpos, maxLength))){
         if(!!foldAnywhere){
             response += line;
             if(curpos+maxLength<str.length){
@@ -67,7 +60,7 @@ this.foldLine = function(str, maxLength, foldAnywhere, afterSpace){
     
     // return folded string
     return response;
-}
+};
 
 
 /**
@@ -98,7 +91,7 @@ this.encodeMimeWord = function(str, encoding, charset){
     }
     
     return "=?"+charset+"?"+encoding+"?"+str+"?=";
-}
+};
 
 /**
  * mime.decodeMimeWord(str, encoding, charset) -> String
@@ -126,7 +119,7 @@ this.decodeMimeWord = function(str){
     }
     
     return text;
-}
+};
 
 
 /**
@@ -139,12 +132,12 @@ this.decodeMimeWord = function(str){
  * Encodes a string into Quoted-printable format. 
  **/
 this.encodeQuotedPrintable = function(str, mimeWord, charset){
-    charset = charset || "UTF-8";
+    charset = charset || "UTF-8";
     
     /*
      * Characters from 33-126 OK (except for =; and ?_ when in mime word mode)
      * Spaces + tabs OK (except for line beginnings and endings)  
-     * \n + \r OK
+     * \n + \r OK
      */
     
     str = str.replace(/[^\sa-zA-Z\d]/gm,function(c){
@@ -162,7 +155,7 @@ this.encodeQuotedPrintable = function(str, mimeWord, charset){
     if(!mimeWord){
         // lines might not be longer than 76 bytes, soft break: "=\r\n"
         var lines = str.split(/\r?\n|\r/);
-        str.replace(/(.{73}(?!\r?\n|\r))/,"$&=\r\n")
+        //str.replace(/(.{73}(?!\r?\n|\r))/,"$&=\r\n")
         for(var i=0, len = lines.length; i<len; i++){
             if(lines[i].length>76){
                 lines[i] = this.foldLine(lines[i],76, false, true).replace(/(\r?\n|\r)/g,"=\r\n");
@@ -178,7 +171,7 @@ this.encodeQuotedPrintable = function(str, mimeWord, charset){
     }
 
     return str;
-}
+};
 
 /**
  * mime.deccodeQuotedPrintable(str, mimeWord, charset) -> String
@@ -194,13 +187,13 @@ this.decodeQuotedPrintable = function(str, mimeWord, charset){
     if(mimeWord){
         str = str.replace(/_/g," ");
     }else{
-        str = str.replace(/=(\r?\n|\r)/gm,'');
-        str = str.replace(/=$/,"");
+        str = str.replace(/\=(\r?\n|\r)/gm,'');
+        str = str.replace(/\=$/,"");
     }
     if(charset == "UTF-8")
-        str = decodeURIComponent(str.replace(/%/g,'%25').replace(/=/g,"%"));
+        str = decodeURIComponent(str.replace(/%/g,'%25').replace(/\=/g,"%"));
     else{
-        str = str.replace(/%/g,'%25').replace(/=/g,"%");
+        str = str.replace(/%/g,'%25').replace(/\=/g,"%");
         if(charset=="ISO-8859-1" || charset=="LATIN1")
             str = unescape(str);
         else{
@@ -209,7 +202,7 @@ this.decodeQuotedPrintable = function(str, mimeWord, charset){
         }
     }
     return str;
-}
+};
 
 /**
  * mime.encodeBase64(str) -> String
@@ -225,7 +218,7 @@ this.encodeBase64 = function(str, charset){
     else
         buffer = new Buffer(str, "UTF-8");
     return buffer.toString("base64");
-}
+};
 
 /**
  * mime.decodeBase64(str) -> String
@@ -244,7 +237,7 @@ this.decodeBase64 = function(str, charset){
     
     // defaults to utf-8
     return buffer.toString("UTF-8");
-}
+};
 
 /**
  * mime.parseHeaders(headers) -> Array
@@ -273,7 +266,7 @@ this.parseHeaders = function(headers){
     }
     
     return header_lines;
-}
+};
 
 /**
  * mime.parseAddresses(addresses) -> Array
@@ -285,11 +278,11 @@ this.parseAddresses = function(addresses){
     if(!addresses)
         return {};
 
-    addresses = addresses.replace(/=\?[^?]+\?[QqBb]\?[^?]+\?=/g, (function(a){return this.decodeMimeWord(a)}).bind(this));
+    addresses = addresses.replace(/\=\?[^?]+\?[QqBb]\?[^?]+\?=/g, (function(a){return this.decodeMimeWord(a);}).bind(this));
     
     // not sure if it's even needed - urlencode escaped \\ and \" and \'
-    addresses = addresses.replace(/\\\\/g,function(a){return escape(a.charAt(1))});
-    addresses = addresses.replace(/\\["']/g,function(a){return escape(a.charAt(1))});
+    addresses = addresses.replace(/\\\\/g,function(a){return escape(a.charAt(1));});
+    addresses = addresses.replace(/\\["']/g,function(a){return escape(a.charAt(1));});
     
     // find qutoed strings
     
@@ -365,10 +358,10 @@ this.parseAddresses = function(addresses){
             name = false;
         }
         if(email)
-            addressArr.push({address:decodeURIComponent(email), name: decodeURIComponent(name || "")});
+            addressArr.push({address:decodeURIComponent(email), name: decodeURIComponent(name || "")});
     }
     return addressArr;
-}
+};
 
 /**
  * mime.parseMimeWords(str) -> String
@@ -377,10 +370,10 @@ this.parseAddresses = function(addresses){
  * Parses mime-words into UTF-8 strings
  **/
 this.parseMimeWords = function(str){
-    return str.replace(/=\?[^?]+\?[QqBb]\?[^?]+\?=/g, (function(a){
+    return str.replace(/\=\?[^?]+\?[QqBb]\?[^?]+\?=/g, (function(a){
         return this.decodeMimeWord(a);
     }).bind(this));
-}
+};
 
 /**
  * mime.parseHeaderLine(line) -> Object
@@ -404,7 +397,7 @@ this.parseHeaderLine = function(line){
         }
     }
     return result;
-}
+};
 
 
 /* Helper functions */
@@ -436,9 +429,12 @@ function lineEdges(str){
  * Converts a buffer in <charset> codepage into UTF-8 string
  **/
 function fromCharset(charset, buffer, keep_buffer){
-    var iconv = new Iconv(charset, 'UTF-8//TRANSLIT//IGNORE'),
-        buffer;
-    buffer = iconv.convert(buffer);
+    var iconv;
+    
+    try{
+        iconv = new Iconv(charset, 'UTF-8//TRANSLIT//IGNORE');
+        buffer = iconv.convert(buffer);
+    }catch(E){}
     return keep_buffer?buffer:buffer.toString("utf-8");
 }
 
@@ -450,8 +446,13 @@ function fromCharset(charset, buffer, keep_buffer){
  * Converts a string or buffer to <charset> codepage
  **/
 function toCharset(charset, buffer){
-    var iconv = new Iconv('UTF-8', charset+"//TRANSLIT//IGNORE");
-    return iconv.convert(buffer);
+    var iconv;
+    try{
+        iconv = new Iconv('UTF-8', charset+"//TRANSLIT//IGNORE");
+        return iconv.convert(buffer);
+    }catch(E){
+        return buffer;
+    }
 }
 
 /**
@@ -464,11 +465,11 @@ function toCharset(charset, buffer){
  * NB! For UTF-8 use decodeURIComponent and for Latin 1 decodeURL instead 
  **/
 function decodeBytestreamUrlencoding(encoded_string){
-    var c, i, j=0, prcnts = encoded_string.match(/%/g) || "",
+    var c, i, j=0, len, prcnts = encoded_string.match(/%/g) || "",
             buffer_length = encoded_string.length - (prcnts.length*2),
         buffer = new Buffer(buffer_length);
 
-    for(var i=0; i<encoded_string.length; i++){
+    for(i=0, len=encoded_string.length; i<len; i++){
         c = encoded_string.charCodeAt(i);
         if(c=="37"){ // %
             c = parseInt(encoded_string.substr(i+1,2), 16);
