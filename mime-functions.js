@@ -115,7 +115,7 @@ this.decodeMimeWord = function(str){
     }
     
     if(encoding.toUpperCase()=="B"){
-        return this.decodeBase64(text);
+        return this.decodeBase64(text, charset);
     }
     
     return text;
@@ -190,9 +190,9 @@ this.decodeQuotedPrintable = function(str, mimeWord, charset){
         str = str.replace(/\=(\r?\n|\r)/gm,'');
         str = str.replace(/\=$/,"");
     }
-    if(charset == "UTF-8")
+    if(charset == "UTF-8"){
         str = decodeURIComponent(str.replace(/%/g,'%25').replace(/\=/g,"%"));
-    else{
+    }else{
         str = str.replace(/%/g,'%25').replace(/\=/g,"%");
         if(charset=="ISO-8859-1" || charset=="LATIN1")
             str = unescape(str);
