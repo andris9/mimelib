@@ -367,8 +367,8 @@ this.parseAddresses = function(addresses){
             name = false;
         }
         
-        if(email){
-            addressArr.push({address:decodeURIComponent(email), name: decodeURIComponent(name || "")});
+        if(name || email){
+            addressArr.push({address:decodeURIComponent(email || ""), name: decodeURIComponent(name || "")});
         }
     }
     return addressArr;
