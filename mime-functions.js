@@ -194,12 +194,17 @@ this.decodeQuotedPrintable = function(str, mimeWord, charset){
     // if there are some invalid = symbols convert these to quoted-printable
     // notation, otherwise decodeURICompontent throws an error
     str = str.replace(/\=(?![a-f0-9]{2})/ig,"=3D");
-    
+
     // convert quoted-printable to urlencoded
     str = str.replace(/%/g,'%25').replace(/\=/g,"%");
-    
+
     if(charset == "UTF-8"){
-        str = decodeURIComponent(str);
+        try{
+            str = decodeURIComponent(str);
+        }catch(E){
+            str = decodeBytestreamUrlencoding(str);
+            str = fromCharset(charset, str);
+        }
     }else{
         if(charset=="ISO-8859-1" || charset=="LATIN1")
             str = unescape(str);
