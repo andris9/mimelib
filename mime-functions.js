@@ -105,9 +105,10 @@ this.encodeMimeWord = function(str, encoding, charset){
 
 this.decodeMimeWord = function(str){
     var parts = str.split("?"),
-        charset = parts && parts[1],
+        charset = (parts && parts[1] || "").split("*").shift(),
         encoding = parts && parts[2],
         text = parts && parts[3];
+
     if(!charset || !encoding || !text)
         return str;
     if(encoding.toUpperCase()=="Q"){
