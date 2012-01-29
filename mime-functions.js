@@ -140,12 +140,12 @@ this.decodeMimeWord = function(str){
  * Encodes a string into Quoted-printable format. 
  **/
 this.encodeQuotedPrintable = function(str, mimeWord, charset){
-    charset = charset || "UTF-8";
+    charset = charset || "UTF-8";
     
     /*
      * Characters from 33-126 OK (except for =; and ?_ when in mime word mode)
      * Spaces + tabs OK (except for line beginnings and endings)  
-     * \n + \r OK
+     * \n + \r OK
      */
     
     str = str.replace(/[^\sa-zA-Z\d]/gm,function(c){
@@ -286,17 +286,18 @@ this.parseAddresses = function(addresses){
     if(!addresses)
         return {};
 
-    addresses = addresses.replace(/=\?[^?]+\?[QqBb]\?[^?]+\?=/g, (function(a){return this.decodeMimeWord(a)}).bind(this));
+    addresses = addresses.replace(/\=\?[^?]+\?[QqBb]\?[^?]+\?=/g, (function(a){return this.decodeMimeWord(a);}).bind(this));
     
     // not sure if it's even needed - urlencode escaped \\ and \" and \'
-    addresses = addresses.replace(/\\\\/g,function(a){return escape(a.charAt(1))});
-    addresses = addresses.replace(/\\["']/g,function(a){return escape(a.charAt(1))});
+    addresses = addresses.replace(/\\\\/g,function(a){return escape(a.charAt(1));});
+    addresses = addresses.replace(/\\["']/g,function(a){return escape(a.charAt(1));});
     
     // find qutoed strings
     
-    var parts = addresses.split(','), curStr, 
+    var parts = addresses.split(','), curStr,
         curQuote, lastPos, remainder="", str, list = [],
         curAddress, address, addressArr = [], name, email, i, len;
+    var rightEnd;
 
     // separate quoted text from text parts
     for(i=0, len=parts.length; i<len; i++){
@@ -306,7 +307,9 @@ this.parseAddresses = function(addresses){
         
         curQuote = curStr.charAt(0);
         if(curQuote == "'" || curQuote == '"'){
-            lastPos = curStr.lastIndexOf(curQuote);
+            rightEnd= curStr.indexOf("<");
+            if(rightEnd == -1)rightEnd= curStr.length-1;
+            lastPos = curStr.lastIndexOf(curQuote,rightEnd);
             
             if(!lastPos){
                 remainder = remainder+parts[i]+",";
@@ -362,11 +365,13 @@ this.parseAddresses = function(addresses){
             email = name;
             name = false;
         }
-        if(email)
-            addressArr.push({address:decodeURIComponent(email), name: decodeURIComponent(name || "")});
+        
+        if(name || email){
+            addressArr.push({address:decodeURIComponent(email || ""), name: decodeURIComponent(name || "")});
+        }
     }
     return addressArr;
-}
+};
 
 /**
  * mime.parseMimeWords(str) -> String
