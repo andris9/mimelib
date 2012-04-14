@@ -111,6 +111,11 @@ this.decodeMimeWord = function(str){
 
     if(!charset || !encoding || !text)
         return str;
+    
+    if(charset.toLowerCase().trim() == "ks_c_5601-1987"){
+    	charset = "CP949";
+    }
+    
     if(encoding.toUpperCase()=="Q"){
         return this.decodeQuotedPrintable(text, true, charset);
     }
