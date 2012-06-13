@@ -272,7 +272,7 @@ this.parseHeaders = function(headers){
     headers = headers.replace(/(\r?\n|\r)([ \t])/gm," ");
 
     // split lines
-    lines = headers.split(/(\r?\n|\r)/);
+    lines = headers.split(/\r?\n|\r/);
     for(i=0; i<lines.length;i++){
         if(!lines[i]) // no more header lines
             break;
