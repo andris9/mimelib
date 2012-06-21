@@ -1,7 +1,7 @@
 {
     "name": "mimelib-noiconv",
     "description": "MIME functions to encode/decode e-mails etc.",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "author" : "Andris Reinman",
     "homepage":"http://github.com/andris9/mimelib",
     "maintainers":[
@@ -23,6 +23,5 @@
     ],
     "dependencies": {
     },
-    "keywords": ["e-mail", "mime", "email"],
-    "man": "./man/doc.1"
+    "keywords": ["e-mail", "mime", "email"]
 }

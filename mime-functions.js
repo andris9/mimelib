@@ -284,7 +284,7 @@ this.parseHeaders = function(headers){
  **/
 this.parseAddresses = function(addresses){
     if(!addresses)
-        return {};
+        return [];
 
     addresses = addresses.replace(/\=\?[^?]+\?[QqBb]\?[^?]+\?=/g, (function(a){return this.decodeMimeWord(a);}).bind(this));
     
