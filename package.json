@@ -27,6 +27,5 @@
     "dependencies": {
         "iconv":"*"
     },
-    "keywords": ["e-mail", "mime", "email"],
-    "man": "./man/doc.1"
+    "keywords": ["e-mail", "mime", "email"]
 }
