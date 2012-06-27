@@ -379,7 +379,9 @@ this.parseAddresses = function(addresses){
         }
         
         if(name || email){
-            addressArr.push({address:decodeURIComponent(email || ""), name: decodeURIComponent(name || "")});
+            name = (name || "").replace(/%27/g, "'").replace(/%22/g, "\"");
+            email = (email || "").replace(/%27/g, "'").replace(/%22/g, "\"");
+            addressArr.push({address: email, name: name});
         }
     }
     return addressArr;
