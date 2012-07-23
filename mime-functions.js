@@ -148,7 +148,7 @@ this.encodeQuotedPrintable = function(str, mimeWord, charset){
      * \n + \r OK
      */
     
-    str = str.replace(/[^\sa-zA-Z\d]/gm,function(c){
+    str = str.replace(/(?:[\ud800-\udbff][\udc00-\udfff])|[^\sa-zA-Z\d]/gm,function(c){
         if(!!mimeWord){
             if(c=="?")return "=3F";
             if(c=="_")return "=5F";
