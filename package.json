@@ -1,7 +1,7 @@
 {
     "name": "mimelib",
     "description": "MIME functions to encode/decode e-mails etc.",
-    "version": "0.1.18",
+    "version": "0.2.0",
     "author" : "Andris Reinman",
     "homepage":"http://github.com/andris9/mimelib",
     "maintainers":[
@@ -17,7 +17,10 @@
         "type" : "git",
         "url" : "http://github.com/andris9/mimelib.git"
     },
-    "main" : ".",
+    "scripts":{
+        "test": "nodeunit test/"
+    },
+    "main" : "index.js",
     "licenses" : [
         {
             "type": "MIT",
@@ -25,7 +28,11 @@
         }
     ],
     "dependencies": {
-        "iconv":"*"
+        "encoding": "*",
+        "addressparser": "*"
+    },
+    "devDependencies":{
+        "nodeunit": "*"
     },
     "keywords": ["e-mail", "mime", "email"]
 }

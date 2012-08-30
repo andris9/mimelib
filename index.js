@@ -1,4 +1,4 @@
 
-module.exports = require("./mime-functions");
-module.exports.contentTypes = require("./content-types");
-module.exports.contentTypesReversed = require("./content-types-reversed");
+module.exports = require("./lib/mimelib");
+module.exports.contentTypes = require("./lib/content-types");
+module.exports.contentTypesReversed = require("./lib/content-types-reversed");
