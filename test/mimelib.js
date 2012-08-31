@@ -52,5 +52,31 @@ exports["Quoted printable"] = {
 }
 
 exports["Base64"] = {
-    
+    "Convert string": function(test){
+        test.equal("VGVyZSDVxNbcIQ==", mimelib.encodeBase64("Tere ÕÄÖÜ!", "Latin_1"));
+        test.done();
+    },
+
+    "Decode string": function(test){
+        test.equal("Tere ÕÄÖÜ!", mimelib.decodeBase64("VGVyZSDVxNbcIQ==", "Latin_1"));
+        test.done();
+    }
 }
+
+exports["Mime Words"] = {
+    "Encode Mime Word QP": function(test){
+        test.equal("=?ISO-8859-13?Q?J=F5ge-va=DE?=", mimelib.encodeMimeWord("Jõge-vaŽ", "Q", "iso-8859-13"));
+        test.done();
+    },
+
+    "Decode Mime Word QP": function(test){
+        test.equal("Jõge-vaŽ", mimelib.decodeMimeWord("=?ISO-8859-13?Q?J=F5ge-va=DE?="));
+        test.done();
+    },
+
+    "Parse Mime Words": function(test){
+        test.equal("Jõge-vaŽ zz Jõge-vaŽJõge-vaŽJõge-vaŽ", mimelib.parseMimeWords("=?ISO-8859-13?Q?J=F5ge-va=DE?= zz =?ISO-8859-13?Q?J=F5ge-va=DE?= =?ISO-8859-13?Q?J=F5ge-va=DE?= =?ISO-8859-13?Q?J=F5ge-va=DE?="))
+        test.done();
+    }
+}
+
