@@ -48,6 +48,13 @@ exports["Quoted printable"] = {
 
         test.equal(longLine, mimelib.decodeQuotedPrintable(longLineEncoded));
         test.done();
+    },
+
+    "Surrogate pair": function(test){
+        // 💩 pile of poo
+        test.equal("=F0=9F=92=A9", mimelib.encodeQuotedPrintable('\ud83d\udca9'))
+        test.equal("\ud83d\udca9", mimelib.decodeQuotedPrintable('=F0=9F=92=A9'))
+        test.done();
     }
 }
 
