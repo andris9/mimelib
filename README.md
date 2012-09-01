@@ -25,7 +25,7 @@ file extensions
 
 Folds a long line according to the RFC 5322 <http://tools.ietf.org/html/rfc5322#section-2.1.1>
 
-    mimelib.foldLine(str [, maxLength][, foldAnywhere]) -> String
+    mimelib.foldLine(str [, maxLength][, foldAnywhere][, afterSpace]) -> String
     
   - `str` (String): mime string that might need folding
   - `maxLength` (Number): max length for a line, defaults to 78
