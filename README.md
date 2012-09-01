@@ -83,17 +83,17 @@ Encodes a string into Quoted-printable format (see also `decodeQuotedPrintable`)
     mimelib.encodeQuotedPrintable(str [, mimeWord][, charset]) -> String
     
   - `str` (String): String to be encoded into Quoted-printable
-  - `mimeWord` (Boolean): Use mime-word mode (defaults to false)
+  - `mimeWord` (Boolean): Deprecated, has no effect, ignore it
   - `charset` (String): Destination charset, defaults to UTF-8
 
 ### decodeQuotedPrintable
 
 Decodes a string from Quoted-printable format  (see also `encodeQuotedPrintable`)
 
-    mimelib.deccodeQuotedPrintable(str [, mimeWord][, charset]) -> String
+    mimelib.decodeQuotedPrintable(str [, mimeWord][, charset]) -> String
     
   - `str` (String): String to be decoded
-  - `mimeWord` (Boolean): Use mime-word mode (defaults to false)
+  - `mimeWord` (Boolean): Deprecated, has no effect, ignore it
   - `charset` (String): Charset to be used, defaults to UTF-8
   
 ### encodeBase64
