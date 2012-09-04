@@ -84,6 +84,26 @@ exports["Mime Words"] = {
     "Parse Mime Words": function(test){
         test.equal("Jõge-vaŽ zz Jõge-vaŽJõge-vaŽJõge-vaŽ", mimelib.parseMimeWords("=?ISO-8859-13?Q?J=F5ge-va=DE?= zz =?ISO-8859-13?Q?J=F5ge-va=DE?= =?ISO-8859-13?Q?J=F5ge-va=DE?= =?ISO-8859-13?Q?J=F5ge-va=DE?="))
         test.done();
+    },
+
+    "Split on maxLength QP": function(test){
+        var inputStr = "Jõgeva Jõgeva Jõgeva mugeva Jõgeva Jõgeva Jõgeva Jõgeva Jõgeva",
+            outputStr = "=?ISO-8859-1?Q?J=F5geva_J=F5gev?= =?ISO-8859-1?Q?a_J=F5geva?= mugeva =?ISO-8859-1?Q?J=F5geva_J=F5gev?= =?ISO-8859-1?Q?a_J=F5geva_J=F5g?= =?ISO-8859-1?Q?eva_J=F5geva?=",
+            encoded = mimelib.encodeMimeWords(inputStr, "Q", 16, "ISO-8859-1");
+
+        test.equal(outputStr, encoded)
+        test.equal(inputStr, mimelib.parseMimeWords(encoded));
+        test.done();
+    },
+
+    "Split on maxLength Base64": function(test){
+        var inputStr = "Jõgeva Jõgeva Jõgeva mugeva Jõgeva Jõgeva Jõgeva Jõgeva Jõgeva",
+            outputStr = "=?ISO-8859-1?B?SvVnZXZhIEr1Z2V2?= =?ISO-8859-1?B?YSBK9WdldmE=?= mugeva =?ISO-8859-1?B?SvVnZXZhIEr1Z2V2?= =?ISO-8859-1?B?YSBK9WdldmEgSvVn?= =?ISO-8859-1?B?ZXZhIEr1Z2V2YQ==?=",
+            encoded = mimelib.encodeMimeWords(inputStr,"B", 16, "ISO-8859-1");
+
+        test.equal(outputStr, encoded)
+        test.equal(inputStr, mimelib.parseMimeWords(encoded));
+        test.done();
     }
 }
 
