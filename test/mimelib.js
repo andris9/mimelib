@@ -107,3 +107,13 @@ exports["Mime Words"] = {
     }
 }
 
+exports["Fold long line"] = function(test){
+    var inputStr = "Subject: Testin command line kirja õkva kakva mõni tõnis kõllas põllas tõllas rõllas jušla kušla tušla musla",
+        outputStr = "Subject: Testin command line kirja =?UTF-8?Q?=C3=B5kva?= kakva\r\n"+
+                    " =?UTF-8?Q?m=C3=B5ni_t=C3=B5nis_k=C3=B5llas_p=C3=B5?=\r\n"+
+                    " =?UTF-8?Q?llas_t=C3=B5llas_r=C3=B5llas_ju=C5=A1la_?=\r\n"+
+                    " =?UTF-8?Q?ku=C5=A1la_tu=C5=A1la?= musla";
+
+    test.equal(outputStr, mimelib.foldLine(mimelib.encodeMimeWords(inputStr, "Q", 52), 76, false, false, 52));
+    test.done();
+}
