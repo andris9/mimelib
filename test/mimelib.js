@@ -9,6 +9,13 @@ exports["Quoted printable"] = {
         test.done();
     },
 
+    "Don't wrap between encoded chars": function(test){
+        var wrapped = "a__________________________",
+            wrappedEncoded = "a=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=\r\n=5F=5F";
+        test.equal(wrappedEncoded, mimelib.encodeQuotedPrintable(wrapped));
+        test.done();
+    },
+
     "Encode long string": function(test){
         var longLine = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"+
                        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"+
