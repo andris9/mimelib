@@ -30,6 +30,13 @@ exports["Quoted printable"] = {
         test.done();
     },
 
+    "Quote at line edge": function(test){
+        var str = 'Title: <a href="http://www.elezea.com/2012/09/iphone-5-local-maximum/">The future of e-commerce is storytelling</a> <br>',
+            strEncoded = "Title: <a href=3D=22http://www.elezea.com/2012/09/iphone-5-local-maximum/=\r\n=22>The future of e-commerce is storytelling</a> =\r\n<br>";
+        test.equal(strEncoded, mimelib.encodeQuotedPrintable(str));
+        test.done();
+    },
+
     "Wordwrap long string with UTF-8 sequence on edge": function(test){
         var longLine = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"+
                        "ABCDEFGHIÄÄÄPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"+

@@ -14,13 +14,6 @@ Install with *npm*
 
 ## Reference
 
-### contentTypes
-
-`mimelib.contentTypes` is an object to provide content type strings for common
-file extensions
-
-    mimelib.contentTypes["xls"]; // "application/vnd.ms-excel"
-
 ### foldLine
 
 Folds a long line according to the RFC 5322 <http://tools.ietf.org/html/rfc5322#section-2.1.1>
@@ -192,3 +185,12 @@ Results in
 
     {"defaultValue": 'text/plain',
      "charset": 'utf-8' }
+
+### contentTypes
+
+**NB! this feature is deprecated**, use [mime](https://github.com/broofa/node-mime) module instead to detect content types and extensions
+
+`mimelib.contentTypes` is an object to provide content type strings for common
+file extensions
+
+    mimelib.contentTypes["xls"]; // "application/vnd.ms-excel"
