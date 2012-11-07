@@ -194,3 +194,19 @@ Results in
 file extensions
 
     mimelib.contentTypes["xls"]; // "application/vnd.ms-excel"
+
+## iconv support
+
+By default only iconv-lite support is bundled. If you need node-iconv support, you need to add it
+as an additional dependency for your project:
+
+    ...,
+    "dependencies":{
+        "mimelib": "*",
+        "iconv": "*"
+    },
+    ...
+
+## License
+
+mimelib license is
