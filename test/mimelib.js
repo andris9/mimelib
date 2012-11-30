@@ -97,6 +97,7 @@ exports["Mime Words"] = {
 
     "Parse Mime Words": function(test){
         test.equal("Jõge-vaŽ zz Jõge-vaŽJõge-vaŽJõge-vaŽ", mimelib.parseMimeWords("=?ISO-8859-13?Q?J=F5ge-va=DE?= zz =?ISO-8859-13?Q?J=F5ge-va=DE?= =?ISO-8859-13?Q?J=F5ge-va=DE?= =?ISO-8859-13?Q?J=F5ge-va=DE?="))
+        test.equal("Sssś Lałalalala", mimelib.parseMimeWords("=?UTF-8?B?U3NzxZsgTGHFgmFsYQ==?= =?UTF-8?B?bGFsYQ==?="));
         test.done();
     },
 
