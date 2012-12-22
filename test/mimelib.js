@@ -64,6 +64,14 @@ exports["Quoted printable"] = {
         test.done();
     },
 
+    "Decode string with soft linebreaks": function(test){
+        var input = "Tere =\r\nvana kere=",
+            output = "Tere vana kere";
+
+        test.equal(output, mimelib.decodeQuotedPrintable(input));
+        test.done();
+    },
+
     "Surrogate pair": function(test){
         // 💩 pile of poo
         test.equal("=F0=9F=92=A9", mimelib.encodeQuotedPrintable('\ud83d\udca9'))

@@ -93,7 +93,7 @@ Decodes a string from Quoted-printable format  (see also `encodeQuotedPrintable`
 
 Encodes a string into Base64 format. Base64 is mime-word safe (see also `decodeBase64`)
 
-    mimelib.encodeBase64(str [, charset]) -> String
+    mimelib.encodeBase64(str [, charset]) -> String
     
   - `str` (String): String to be encoded into Base64
   - `charset` (String): Destination charset, defaults to UTF-8
