@@ -127,7 +127,22 @@ exports["Mime Words"] = {
         test.equal(outputStr, encoded)
         test.equal(inputStr, mimelib.parseMimeWords(encoded));
         test.done();
-    }
+    },
+
+    "Ascii range": function(test){
+        var input1 = "метель\" вьюга",
+            input2 = "метель'вьюга",
+            output1 = "=?UTF-8?Q?=D0=BC=D0=B5=D1=82=D0=B5=D0=BB=D1=8C=22_?= =?UTF-8?Q?=D0=B2=D1=8C=D1=8E=D0=B3=D0=B0?=",
+            output2 = "=?UTF-8?Q?=D0=BC=D0=B5=D1=82=D0=B5=D0=BB=D1=8C'?= =?UTF-8?Q?=D0=B2=D1=8C=D1=8E=D0=B3=D0=B0?=";
+
+        test.equal(mimelib.encodeMimeWords(input1, "Q", 52), output1);
+        test.equal(mimelib.parseMimeWords(output1), input1);
+        
+        test.equal(mimelib.encodeMimeWords(input2, "Q", 52), output2);
+        test.equal(mimelib.parseMimeWords(output2), input2);
+
+        test.done();
+    } 
 }
 
 exports["Fold long line"] = function(test){
