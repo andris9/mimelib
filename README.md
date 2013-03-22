@@ -51,7 +51,7 @@ For example:
 
 Becomes with UTF-8 and Quoted-printable encoding
 
-    =?UTF-8?q?See_on_=C3=B5hin_test?=
+    =?UTF-8?Q?See_on_=C3=B5hin_test?=
     
 ### decodeMimeWord
 
@@ -63,7 +63,7 @@ Decodes a string from mime encoded word format (see also `encodeMimeWord`)
 
 For example
 
-    mimelib.decodeMimeWord("=?UTF-8?q?See_on_=C3=B5hin_test?=");
+    mimelib.decodeMimeWord("=?UTF-8?Q?See_on_=C3=B5hin_test?=");
 
 will become
 
@@ -163,7 +163,7 @@ Parses mime-words into UTF-8 strings
   
 For example:
 
-    mimelib.parseMimeWords("Hello: =?UTF-8?q?See_on_=C3=B5hin_test?=");
+    mimelib.parseMimeWords("Hello: =?UTF-8?Q?See_on_=C3=B5hin_test?=");
 
 Results in
 

@@ -9,6 +9,13 @@ exports["Quoted printable"] = {
         test.done();
     },
 
+    "parseMimeWords example": function(test){
+        test.equal("Hello: See on õhin test", mimelib.parseMimeWords("Hello: =?UTF-8?q?See_on_=C3=B5hin_test?="));
+        test.equal("=?UTF-8?Q?See_on_=C3=B5hin_test?=", mimelib.encodeMimeWord("See on õhin test"));
+        test.equal("See on õhin test", mimelib.decodeMimeWord("=?UTF-8?q?See_on_=C3=B5hin_test?="));
+        test.done();
+    },
+
     "Don't wrap between encoded chars": function(test){
         var wrapped = "a__________________________",
             wrappedEncoded = "a=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=5F=\r\n=5F=5F";
