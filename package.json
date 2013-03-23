@@ -1,7 +1,7 @@
 {
     "name": "mimelib",
     "description": "MIME functions to encode/decode e-mails etc.",
-    "version": "0.2.11",
+    "version": "0.2.12",
     "author" : "Andris Reinman",
     "homepage":"http://github.com/andris9/mimelib",
     "maintainers":[
@@ -28,8 +28,8 @@
         }
     ],
     "dependencies": {
-        "encoding": "*",
-        "addressparser": "*"
+        "encoding": "~0.1",
+        "addressparser": "~0.1"
     },
     "devDependencies":{
         "nodeunit": "*"
