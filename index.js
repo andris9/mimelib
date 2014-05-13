@@ -1,3 +1,4 @@
+"use strict";
 
 module.exports = require("./lib/mimelib");
 module.exports.contentTypes = require("./lib/content-types");
