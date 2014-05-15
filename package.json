@@ -28,8 +28,8 @@
     }
   ],
   "dependencies": {
-    "encoding": "^0.1.7",
-    "addressparser": "^0.2.1"
+    "encoding": "~0.1.7",
+    "addressparser": "~0.2.1"
   },
   "devDependencies": {
     "nodeunit": "*"
