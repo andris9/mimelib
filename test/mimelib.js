@@ -116,6 +116,11 @@ exports["Mime Words"] = {
         test.done();
     },
 
+    "Join before parsing": function(test){
+        test.equal("GLG: Regulation of Taxi in China - 张一兵", mimelib.parseMimeWords("=?utf-8?B?R0xHOiBSZWd1bGF0aW9uIG9mIFRheGkgaW4gQ2hpbmEgLSDl?= =?utf-8?B?vKDkuIDlhbU=?="))
+        test.done();
+    },
+
     "Split on maxLength QP": function(test){
         var inputStr = "Jõgeva Jõgeva Jõgeva mugeva Jõgeva Jõgeva Jõgeva Jõgeva Jõgeva",
             outputStr = "=?ISO-8859-1?Q?J=F5geva_J=F5gev?= =?ISO-8859-1?Q?a_J=F5geva?= mugeva =?ISO-8859-1?Q?J=F5geva_J=F5gev?= =?ISO-8859-1?Q?a_J=F5geva_J=F5g?= =?ISO-8859-1?Q?eva_J=F5geva?=",
