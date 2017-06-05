@@ -1,3 +1,5 @@
+## THIS MODULE IS DEPRECATED
+
 # mimelib
 
 *mimelib* is a collection of useful functions to deal with mime-encoded data.
