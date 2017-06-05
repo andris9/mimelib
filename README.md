@@ -211,4 +211,4 @@ as an additional dependency for your project:
 
 ## License
 
-mimelib license is
+mimelib is licensed under the [European Union Public License 1.1](http://ec.europa.eu/idabc/eupl.html).
